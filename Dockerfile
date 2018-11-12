@@ -1,6 +1,8 @@
-FROM php:7.0-apache
+#start with our base image (the foundation) - version 7.1.5
+FROM php:7.1.5-apache
 
-RUN apt-get update -yqq \
+#install all the system dependencies and enable PHP modules 
+RUN apt-get update && apt-get install -y \  
       libicu-dev \
       libpq-dev \
       libmcrypt-dev \
@@ -10,7 +12,7 @@ RUN apt-get update -yqq \
       unzip \
     && rm -r /var/lib/apt/lists/* \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
-    && docker-php-ext-install pdo_mysql mysqli \
+    && docker-php-ext-install \
       intl \
       mbstring \
       mcrypt \
@@ -19,27 +21,32 @@ RUN apt-get update -yqq \
       pdo_pgsql \
       pgsql \
       zip \
-      opcache \
-  && rm -rf /var/lib/apt/lists
+      opcache
 
-# Enable PHP extensions * added above
-#RUN docker-php-ext-install pdo_mysql mysqli
-
-# Install composer
+#install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+
+#set our application folder as an environment variable
+ENV APP_HOME /var/www/html
+
+#change uid and gid of apache to docker user uid/gid
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
+#change the web_root to laravel /var/www/html/public folder
+RUN sed -i -e "s/html/html\/webroot/g" /etc/apache2/sites-enabled/000-default.conf
+
+#copy source files and run composer
+COPY . $APP_HOME
+
+# install all PHP dependencies
+RUN composer install --no-interaction
+
+#change ownership of our applications
+RUN chown -R www-data:www-data $APP_HOME
 
 # Add cake and composer command to system path
 ENV PATH="${PATH}:/var/www/html/lib/Cake/Console"
 ENV PATH="${PATH}:/var/www/html/app/Vendor/bin"
-
-# COPY apache site.conf file
-COPY ./docker/apache/site.conf /etc/apache2/sites-available/000-default.conf
-
-# Copy the source code into /var/www/html/ inside the image
-COPY . .
-
-# Set default working directory
-WORKDIR ./app
 
 # Create tmp directory and make it writable by the web server
 RUN mkdir -p \
