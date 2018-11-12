@@ -19,7 +19,7 @@ RUN apt-get update -yqq \
       pdo_pgsql \
       pgsql \
       zip \
-      opcache
+      opcache \
   && rm -rf /var/lib/apt/lists
 
 # Enable PHP extensions * added above
