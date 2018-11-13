@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
       libicu-dev \
       libpq-dev \
       libmcrypt-dev \
+      libxml2-dev \
       mysql-client \
       git \
       zip \
@@ -16,10 +17,12 @@ RUN apt-get update && apt-get install -y \
       intl \
       mbstring \
       mcrypt \
+      mysqli \
       pcntl \
       pdo_mysql \
       pdo_pgsql \
       pgsql \
+      simplexml \
       zip \
       opcache
 
@@ -59,6 +62,6 @@ RUN mkdir -p \
 
 # Enable Apache modules and restart
 RUN a2enmod rewrite \
-  && service apache2 restart
+  && service apache2 start
 
 EXPOSE 80

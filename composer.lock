@@ -2316,7 +2316,7 @@
                 "shasum": ""
             },
             "require": {
-                "ext-simplexml": "*",
+                "ext-simplexml": "7.1.5",
                 "ext-tokenizer": "*",
                 "ext-xmlwriter": "*",
                 "php": ">=5.4.0"
@@ -2695,6 +2695,6 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": {
-        "ext-simplexml": "^0.0.0"
+        "ext-simplexml": "^7.1.5"
     }
 }
