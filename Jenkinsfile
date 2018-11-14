@@ -1,5 +1,5 @@
 timestamps {
-    properties([pipelineTriggers([pollSCM('H * * * *')])])
+    properties([pipelineTriggers([pollSCM('* * * * *')])])
     node () {
 
     	stage ('a_freestyle_cake - Checkout') {
