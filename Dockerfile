@@ -2,8 +2,7 @@
 FROM php:7.1.5-apache
 
 #install all the system dependencies and enable PHP modules 
-RUN apt-get update && apt-get install -y \  
-      sudo \
+RUN apt-get update && apt-get install -y \
       libicu-dev \
       libpq-dev \
       libmcrypt-dev \
@@ -26,9 +25,6 @@ RUN apt-get update && apt-get install -y \
       simplexml \
       zip \
       opcache
-
-# install sudo add docker user with sudo privileges
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 #install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
