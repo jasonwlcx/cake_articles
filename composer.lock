@@ -2697,6 +2697,6 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": {
-        "ext-simplexml": "^0.0.0"
+        "ext-simplexml": "*"
     }
 }
