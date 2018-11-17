@@ -1,6 +1,6 @@
 {
     "_readme": [
-        "This file locks the dependencies of your project to a known state with a polling glaven",
+        "This file locks the dependencies of your project to a known state with a 1 min polling glaven",
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
