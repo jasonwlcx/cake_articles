@@ -1,7 +1,6 @@
 timestamps {
     node () {
-
-    	stage ('a_freestyle_cake - Checkout') {
+    	stage ('Checkout') {
      	 checkout([$class: 'GitSCM', 
      	    branches: [[name: '*/develop']], 
      	    doGenerateSubmoduleConfigurations: false, 
@@ -13,7 +12,7 @@ timestamps {
      	        ]
      	 ]) 
     	}
-    	stage ('a_freestyle_cake - Build') {
+    	stage ('Build') {
      	    // Shell build step
             sh """ 
             echo "Build the docker Image"
@@ -37,11 +36,11 @@ timestamps {
             #docker rm "${docker ps -l -q}";
             echo "success"
             """
-    	}/*
+    	}
         stage ('Docker push') {
             docker.withRegistry('https://104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles', 'ecr:us-west-2:cake_articles-ecr-credentials') {
             docker.image('cake_articles').push("${BUILD_TAG}")
             }
-        }*/
+        }
     }
 }
