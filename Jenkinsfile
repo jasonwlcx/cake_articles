@@ -28,7 +28,6 @@ timestamps {
             """
             sh """
             # Authenticate, tag and push the image to the aws ecr repository
-            "${aws ecr get-login --no-include-email --region us-west-2}"
             docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             """
