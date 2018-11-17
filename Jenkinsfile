@@ -34,7 +34,7 @@ timestamps {
             # Tear down the running container(s) and remove the docker images
             #docker stop "${docker ps -l -q}";
             #docker rm "${docker ps -l -q}";
-            echo "success"
+            echo "hope for success"
             """
     	}
         stage ('Docker push') {
