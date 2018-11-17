@@ -16,7 +16,7 @@ timestamps {
      	    // Shell build step
             sh """ 
             echo "Build the docker Image"
-            docker build -t cake_articles:"${BUILD_TAG}" .
+            #docker build -t cake_articles:"${BUILD_TAG}" .
             """
             // Shell build step
             sh """ 
@@ -28,8 +28,6 @@ timestamps {
             # Tag and push the image to the aws ecr repository
             docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
-            #docker stop "${docker ps -l -q}";
-            #docker rm "${docker ps -l -q}";
             """
     	}
     }
