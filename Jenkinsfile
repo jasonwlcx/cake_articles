@@ -1,5 +1,4 @@
 timestamps {
-    properties([pipelineTriggers([pollSCM('* * * * *')])])
     node () {
 
     	stage ('a_freestyle_cake - Checkout') {
@@ -17,15 +16,32 @@ timestamps {
     	stage ('a_freestyle_cake - Build') {
      	    // Shell build step
             sh """ 
-            echo "run the docker build step"
-            docker build -t cake_articles:latest_glaven .
+            echo "Build the docker Image"
+            docker build -t cake_articles:"${BUILD_TAG}" .
             """
             // Shell build step
             sh """ 
             # Launch the container
-            docker run -d -p 80:80 cake_articles:latest_glaven
-            #curl --verbose http://builds.mini-super.com/index.php
-            """ 
+            docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
+            curl --verbose http://builds.mini-super.com/index.php
+            """
+            sh """
+            # Authenticate, tag and push the image to the aws ecr repository
+            #"${aws ecr get-login --no-include-email}"
+            docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
+            #docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
+            """
+            sh """
+            # Tear down the running container(s) and remove the docker images
+            #docker stop "${docker ps -l -q}";
+            #docker rm "${docker ps -l -q}";
+            echo "success"
+            """
     	}
+        stage ('Docker push') {
+            docker.withRegistry('https://104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles', 'ecr:us-west-2:cake_articles-ecr-credentials') {
+            docker.image('cake_articles').push("${BUILD_TAG}")
+            }
+        }
     }
 }
