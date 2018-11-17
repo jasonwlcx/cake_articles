@@ -1,5 +1,4 @@
 timestamps {
-    properties([pipelineTriggers([pollSCM('* * * * *')])])
     node () {
 
     	stage ('a_freestyle_cake - Checkout') {
@@ -23,7 +22,7 @@ timestamps {
             // Shell build step
             sh """ 
             # Launch the container
-            docker run -d -p 80:80 cake_articles:"${BUILD_TAG}"
+            docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
             curl --verbose http://builds.mini-super.com/index.php
             """
             sh """
@@ -33,8 +32,9 @@ timestamps {
             """
             sh """
             # Tear down the running container(s) and remove the docker images
-            docker stop "${docker ps -l -q}";
-            docker rm "${docker ps -l -q}";
+            #docker stop "${docker ps -l -q}";
+            #docker rm "${docker ps -l -q}";
+            echo "success"
             """
     	}
     }
