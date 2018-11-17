@@ -37,10 +37,11 @@ timestamps {
             #docker rm "${docker ps -l -q}";
             echo "success"
             """
-    	}
-        stage 'Docker push'
+    	}/*
+        stage ('Docker push') {
             docker.withRegistry('https://104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles', 'ecr:us-west-2:cake_articles-ecr-credentials') {
             docker.image('cake_articles').push("${BUILD_TAG}")
-        }
+            }
+        }*/
     }
 }
