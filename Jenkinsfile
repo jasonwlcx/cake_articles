@@ -15,7 +15,7 @@ timestamps {
     	stage ('Build') {
      	    // Shell build step
             sh """ 
-            echo "Build the docker Image"
+            #echo "Build the docker Image"
             docker build -t cake_articles .
             """
             // Shell build step
