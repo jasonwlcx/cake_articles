@@ -34,11 +34,6 @@ timestamps {
             docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             """
-            sh """
-            # Tear down the running container(s) and remove the docker images
-            #docker stop "$(docker ps -l -q)";
-            #docker rm "$(docker ps -l -q)";
-            """
     	}
     }
 }
