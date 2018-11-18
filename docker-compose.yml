@@ -11,17 +11,17 @@ services:
     volumes:
       - .:/var/www/html/
     environment:
-      - SECURITY_SALT=ashjg23697sds97139871298ashk  
+      - SECURITY_SALT=3f3f24274a6d9f60123af8c4d10ea65c8f04d8f76027f18f8be5141920f4853c
       - MYSQL_URL=mysql
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=root
+      - MYSQL_USERNAME=jwilcox
+      - MYSQL_PASSWORD=password
   mysql:
     image: mysql:5.6
     volumes:
       - mysql-data:/var/lib/mysql
     environment:      
-      - MYSQL_DATABASE=cakephp
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cake_cms
+      - MYSQL_ROOT_PASSWORD=password
 
 volumes:
   mysql-data:
