@@ -36,8 +36,8 @@ timestamps {
             """
             sh """
             # Tear down the running container(s) and remove the docker images
-            docker stop "$(docker ps -l -q)";
-            docker rm "$(docker ps -l -q)";
+            #docker stop "$(docker ps -l -q)";
+            #docker rm "$(docker ps -l -q)";
             """
     	}
     }
