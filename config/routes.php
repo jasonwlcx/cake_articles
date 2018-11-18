@@ -2,6 +2,7 @@
 use Cake\Core\Plugin;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\Router;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 
 Router::defaultRouteClass(DashedRoute::class);
 
