@@ -31,9 +31,11 @@ pipeline {
               steps {
                   script {
                      def image = docker.image("cake_articles:${BUILD_TAG}")
-                     def container = image.withRun("--rm -p 80:80") {
-                        "curl --verbose http://builds.mini-super.com/index.php"
-                        "./vendor/bin/phpunit"
+                     def container = image.inside("--rm -p 80:80") {
+                        sh """
+                        curl --verbose http://builds.mini-super.com/index.php
+                        ./vendor/bin/phpunit
+                        """
                      }
                   }
               }
