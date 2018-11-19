@@ -14,7 +14,7 @@ timestamps {
     	}
     	stage ('Build') {
      	    script { 
-                def receiver = docker.build("cake_articles",  "${BUILD_TAG}")
+                def receiver = docker.build("cake_articles:${BUILD_TAG}")
                     def receiver_container = cake_articles.run("-d -p 80:80")
             }
             sh """ 
