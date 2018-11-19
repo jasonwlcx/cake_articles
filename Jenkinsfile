@@ -24,7 +24,7 @@ timestamps {
             sh """ 
             # Launch the container
             docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
-            ./vendor/bin/phpunit
+            phpunit
             curl --verbose http://builds.mini-super.com/index.php
             """
         }
