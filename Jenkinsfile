@@ -25,11 +25,12 @@ pipeline {
                         ./var/www/html/vendor/bin/phpunit
                         curl --verbose http://builds.mini-super.com/index.php
                         """
-                  }
+                        }
                   sh """ 
                   echo "Built the docker Image"
                   #docker build -t cake_articles:"${BUILD_TAG}" .
                   """
+                  }
                 }
             }
             stage ('Archive') {
@@ -49,4 +50,4 @@ post {
             receiver_container.stop()
         }
     }
-}}
+}
