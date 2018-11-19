@@ -1,5 +1,5 @@
 pipeline {
-   agent any
+   agent none
         environment {
             PATH = "$PATH:/usr/bin"
         }
@@ -22,7 +22,7 @@ pipeline {
                 steps {
      	            script { 
                         def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                        def receiver_container = receiver.run("--rm -p 80:80")
+                        def receiver_container = receiver.run("--rm -p 80:80 --network='build_test'")
                     }
                     sh """ 
                     echo "Build the docker Image"
@@ -31,7 +31,7 @@ pipeline {
                 }
             }
             stage ('Test') {
-                agent { docker { image cake_articles:"${BUILD_TAG}" } }
+                agent { dockerfile { args '-v /etc/passwd:/etc/passwd --network="build_test"' } }
                 steps {
                     // Shell build step
                     sh """ 
@@ -43,7 +43,7 @@ pipeline {
                 }
             }
             stage ('Archive') {
-                agent any
+               agent any
                 steps {
                     sh """
                     # Tag and push the image to the aws ecr repository
