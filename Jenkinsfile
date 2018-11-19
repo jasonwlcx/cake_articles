@@ -4,7 +4,7 @@ pipeline {
             PATH = "$PATH:/usr/bin"
         }
         stages {
-     	            checkout([$class: 'GitSCM', 
+     	           stage (checkout([$class: 'GitSCM', 
      	            branches: [[name: '*/develop']], 
      	            doGenerateSubmoduleConfigurations: false, 
      	            extensions: [], 
@@ -12,7 +12,7 @@ pipeline {
      	            userRemoteConfigs: [
      	                [credentialsId: 'edf6ddc3-92f1-496c-b829-b490b2743a51', 
      	                url: 'https://github.com/jasonwlcx/cake_articles/']]
-     	            ])
+                                 ]))}
     	    stage ('Build') {
                 steps {
      	            script { 
@@ -38,7 +38,6 @@ pipeline {
                     """
                 }
     	    }
-          }
         }
 }
 post {
