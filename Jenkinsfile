@@ -39,7 +39,8 @@ pipeline {
                     """
                 }
     	    }
-        }
+       }
+   }
 }
 post {
     always {
