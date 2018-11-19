@@ -14,32 +14,36 @@ pipeline {
      	            url: 'https://github.com/jasonwlcx/cake_articles/']]
      	        ])
             }
-    	}
     	stage ('Build') {
-     	    script { 
-                def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                def receiver_container = receiver.run("--rm -d -p 80:80")
-            }
-            sh """ 
-            echo "Build the docker Image"
+            steps {
+     	        script { 
+                    def receiver = docker.build("cake_articles:${BUILD_TAG}")
+                    def receiver_container = receiver.run("--rm -d -p 80:80")
+                }
+            # sh """ 
+            #echo "Build the docker Image"
             #docker build -t cake_articles:"${BUILD_TAG}" .
-            """
+            #"""
         }
-        stage ('Test') { 
-            // Shell build step
-            sh """ 
-            # Launch the container
-            #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
-            #"${PWD}"/vendor/bin/phpunit
-            #curl --verbose http://builds.mini-super.com/index.php
-            """
+        stage ('Test') {
+            steps {
+                // Shell build step
+                sh """ 
+                # Launch the container
+                #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
+                #"${PWD}"/vendor/bin/phpunit
+                #curl --verbose http://builds.mini-super.com/index.php
+                """
+            }
         }
         stage ('Archive') {
-            sh """
-            # Tag and push the image to the aws ecr repository
-            docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
-            docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
-            """
+            steps {
+                sh """
+                # Tag and push the image to the aws ecr repository
+                docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
+                docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
+                """
+            }
     	}
     }
 }
