@@ -32,11 +32,11 @@ pipeline {
                 steps {
                     // Shell build step
                    script {
-                        # Launch the container
                         def receiver_container = receiver.withRun("--rm -p 80:80") {
-                           #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
+                           sh """
                            ./var/www/html/vendor/bin/phpunit
                            curl --verbose http://builds.mini-super.com/index.php
+                           """
                         }
                     }
                 }
