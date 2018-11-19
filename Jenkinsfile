@@ -21,7 +21,7 @@ pipeline {
                 steps {
      	            script { 
                         def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                        def receiver_container = receiver.run("--rm -p 80:80 --network='build_test'")
+                        def receiver_container = receiver.run("--rm -p 80:80")
                     }
                     sh """ 
                     echo "Build the docker Image"
@@ -30,7 +30,7 @@ pipeline {
                 }
             }
             stage ('Test') {
-                agent { dockerfile { args '-v /etc/passwd:/etc/passwd --network="build_test"' } }
+                agent { dockerfile { args '-v /etc/passwd:/etc/passwd' } }
                 steps {
                     // Shell build step
                     sh """ 
