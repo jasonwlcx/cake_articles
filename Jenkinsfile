@@ -46,11 +46,11 @@ pipeline {
             }
     	}
     }
-}
-post {
-    always {
-        script { 
-            receiver_container.stop()
+    post {
+        always {
+            script { 
+                receiver_container.stop()
+            }
         }
     }
 }
