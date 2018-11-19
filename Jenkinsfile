@@ -30,7 +30,7 @@ pipeline {
           stage ('Test') {
               steps {
                   script {
-                     def image = cake_articles:"${BUILD_TAG}".id
+                     def image = docker."cake_articles:${BUILD_TAG}".id
                      def container = image.withRun("--rm -p 80:80") {
                         "curl --verbose http://builds.mini-super.com/index.php"
                         "./vendor/bin/phpunit"
