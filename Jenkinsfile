@@ -35,7 +35,7 @@ pipeline {
                         sh """
                         echo "Hello Groovy! From inside recently built container"
                         curl --verbose http://builds.mini-super.com/index.php
-                        vendor/bin/phpunit
+                        phpunit
                         """
                   }
               }
