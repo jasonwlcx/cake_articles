@@ -5,15 +5,16 @@ pipeline {
         }
         stages {
           stage ('Checkout') {
-              checkout([$class: 'GitSCM', 
+             steps {
+               checkout([$class: 'GitSCM', 
      	            branches: [[name: '*/develop']], 
      	            doGenerateSubmoduleConfigurations: false, 
      	            extensions: [], 
      	            submoduleCfg: [], 
      	            userRemoteConfigs: [
      	                [credentialsId: 'edf6ddc3-92f1-496c-b829-b490b2743a51', 
-     	                url: 'https://github.com/jasonwlcx/cake_articles/']]
-              ])
+     	                url: 'https://github.com/jasonwlcx/cake_articles/']]])
+             }
           }
     	    stage ('Build') {
                 steps {
@@ -41,7 +42,6 @@ pipeline {
                 }
     	    }
        }
-   }
 }
 post {
     always {
