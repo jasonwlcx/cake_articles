@@ -38,6 +38,8 @@ pipeline {
                     """
                 }
     	    }
+          }
+        }
 }
 post {
     always {
