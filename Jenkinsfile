@@ -5,7 +5,6 @@ pipeline {
         }
         stages {
     	    stage ('Checkout') {
-                agent any
                 steps {
      	            checkout([$class: 'GitSCM', 
      	            branches: [[name: '*/develop']], 
