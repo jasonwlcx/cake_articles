@@ -1,11 +1,10 @@
 pipeline {
-   agent none
+   agent any
         environment {
             PATH = "$PATH:/usr/bin"
         }
         stages {
     	    stage ('Checkout') {
-                agent any
                 steps {
      	            checkout([$class: 'GitSCM', 
      	            branches: [[name: '*/develop']], 
@@ -19,7 +18,6 @@ pipeline {
                 }
             }
     	    stage ('Build') {
-                agent any
                 steps {
      	            script { 
                         def receiver = docker.build("cake_articles:${BUILD_TAG}")
@@ -44,7 +42,6 @@ pipeline {
                 }
             }
             stage ('Archive') {
-               agent any
                 steps {
                     sh """
                     # Tag and push the image to the aws ecr repository
