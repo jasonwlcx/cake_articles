@@ -36,8 +36,8 @@ pipeline {
                     sh """ 
                     # Launch the container
                     #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
-                    /var/www/html/vendor/bin/phpunit
-                    #curl --verbose http://builds.mini-super.com/index.php
+                    ./var/www/html/vendor/bin/phpunit
+                    curl --verbose http://builds.mini-super.com/index.php
                     """
                 }
             }
