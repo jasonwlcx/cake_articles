@@ -38,7 +38,6 @@ pipeline {
                     """
                 }
     	    }
-        }
 }
 post {
     always {
