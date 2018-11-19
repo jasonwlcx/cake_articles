@@ -51,12 +51,11 @@ pipeline {
                 }
     	    }
         }
-
+}
 post {
     always {
         script { 
             receiver_container.stop()
         }
     }
-}
 }
