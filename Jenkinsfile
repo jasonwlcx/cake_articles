@@ -1,5 +1,8 @@
 pipeline {
     node () {
+        environment {
+            PATH = "$PATH:/usr/bin"
+        }
         stages {
     	    stage ('Checkout') {
                 steps {
