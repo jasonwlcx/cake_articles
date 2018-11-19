@@ -21,10 +21,11 @@ pipeline {
                     def receiver = docker.build("cake_articles:${BUILD_TAG}")
                     def receiver_container = receiver.run("--rm -d -p 80:80")
                 }
-            sh """ 
-            echo "Build the docker Image"
-            #docker build -t cake_articles:"${BUILD_TAG}" .
-            """
+                sh """ 
+                echo "Build the docker Image"
+                #docker build -t cake_articles:"${BUILD_TAG}" .
+                """
+            }
         }
         stage ('Test') {
             steps {
