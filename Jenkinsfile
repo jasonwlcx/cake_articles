@@ -33,8 +33,9 @@ pipeline {
                      def image = docker.image("cake_articles:${BUILD_TAG}")
                      def container = image.inside("--rm -p 80:80") {
                         sh """
-                        curl --verbose http://builds.mini-super.com/index.php
-                        ./vendor/bin/phpunit
+                        echo "Hello Groovy! From inside recently built container"
+                        #curl --verbose http://builds.mini-super.com/index.php
+                        #./vendor/bin/phpunit
                         """
                      }
                   }
