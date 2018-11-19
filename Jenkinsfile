@@ -4,8 +4,6 @@ pipeline {
             PATH = "$PATH:/usr/bin"
         }
         stages {
-    	    stage ('Checkout') {
-                steps {
      	            checkout([$class: 'GitSCM', 
      	            branches: [[name: '*/develop']], 
      	            doGenerateSubmoduleConfigurations: false, 
@@ -15,30 +13,20 @@ pipeline {
      	                [credentialsId: 'edf6ddc3-92f1-496c-b829-b490b2743a51', 
      	                url: 'https://github.com/jasonwlcx/cake_articles/']]
      	            ])
-                }
-            }
     	    stage ('Build') {
                 steps {
      	            script { 
                         def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                    }
-                    sh """ 
-                    echo "Build the docker Image"
-                    #docker build -t cake_articles:"${BUILD_TAG}" .
-                    """
-                }
-            }
-            stage ('Test') {
-                steps {
-                    // Shell build step
-                   script {
                         def receiver_container = receiver.withRun("--rm -p 80:80") {
-                           sh """
-                           ./var/www/html/vendor/bin/phpunit
-                           curl --verbose http://builds.mini-super.com/index.php
-                           """
-                        }
-                    }
+                        sh """
+                        ./var/www/html/vendor/bin/phpunit
+                        curl --verbose http://builds.mini-super.com/index.php
+                        """
+                  }
+                  sh """ 
+                  echo "Built the docker Image"
+                  #docker build -t cake_articles:"${BUILD_TAG}" .
+                  """
                 }
             }
             stage ('Archive') {
