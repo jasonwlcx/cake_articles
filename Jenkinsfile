@@ -15,10 +15,11 @@ timestamps {
     	stage ('Build') {
      	    script { 
                 def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                    def receiver_container = cake_articles.run("-d -p 80:80")
+                def receiver_container = receiver.run("--rm -d -p 80:80") {
+                }
             }
             sh """ 
-            #echo "Build the docker Image"
+            echo "Build the docker Image"
             #docker build -t cake_articles:"${BUILD_TAG}" .
             """
         }
@@ -27,15 +28,15 @@ timestamps {
             sh """ 
             # Launch the container
             #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
-            #phpunit
-            #curl --verbose http://builds.mini-super.com/index.php
+            phpunit
+            curl --verbose http://builds.mini-super.com/index.php
             """
         }
         stage ('Archive') {
             sh """
             # Tag and push the image to the aws ecr repository
-            #docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
-            #docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
+            docker tag cake_articles:"${BUILD_TAG}" 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
+            docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             """
     	}
     }
