@@ -14,6 +14,7 @@ pipeline {
      	            url: 'https://github.com/jasonwlcx/cake_articles/']]
      	        ])
             }
+        }
     	stage ('Build') {
             steps {
      	        script { 
@@ -54,4 +55,4 @@ pipeline {
             }
         }
     }
-    }}
+}
