@@ -23,7 +23,7 @@ pipeline {
                 steps {
      	            script { 
                         def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                        def receiver_container = receiver.run("--rm -d -p 80:80")
+                        def receiver_container = receiver.run("--rm -p 80:80")
                     }
                     sh """ 
                     echo "Build the docker Image"
@@ -32,13 +32,13 @@ pipeline {
                 }
             }
             stage ('Test') {
-                agent any
+                agent { docker { image cake_articles:"${BUILD_TAG} } }
                 steps {
                     // Shell build step
                     sh """ 
                     # Launch the container
                     #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
-                    #"${PWD}"/vendor/bin/phpunit
+                    /var/www/html/vendor/bin/phpunit
                     #curl --verbose http://builds.mini-super.com/index.php
                     """
                 }
