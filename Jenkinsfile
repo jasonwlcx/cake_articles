@@ -4,8 +4,8 @@ pipeline {
             PATH = "$PATH:/usr/bin"
         }
         stages {
-          agent any
     	    stage ('Checkout') {
+                agent any
                 steps {
      	            checkout([$class: 'GitSCM', 
      	            branches: [[name: '*/develop']], 
