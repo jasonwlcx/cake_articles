@@ -1,16 +1,19 @@
-timestamps {
-    node () {
+pipeline {
+    agent none
+    stages {
     	stage ('Checkout') {
-     	 checkout([$class: 'GitSCM', 
-     	    branches: [[name: '*/develop']], 
-     	    doGenerateSubmoduleConfigurations: false, 
-     	    extensions: [], 
-     	    submoduleCfg: [], 
-     	    userRemoteConfigs: [
-     	        [credentialsId: 'edf6ddc3-92f1-496c-b829-b490b2743a51', 
-     	            url: 'https://github.com/jasonwlcx/cake_articles/']
-     	        ]
-     	 ]) 
+            agent any
+            steps {
+     	        checkout([$class: 'GitSCM', 
+     	        branches: [[name: '*/develop']], 
+     	        doGenerateSubmoduleConfigurations: false, 
+     	        extensions: [], 
+     	        submoduleCfg: [], 
+     	        userRemoteConfigs: [
+     	            [credentialsId: 'edf6ddc3-92f1-496c-b829-b490b2743a51', 
+     	            url: 'https://github.com/jasonwlcx/cake_articles/']]
+     	        ])
+            }
     	}
     	stage ('Build') {
      	    script { 
@@ -38,12 +41,12 @@ timestamps {
             docker push 104352192622.dkr.ecr.us-west-2.amazonaws.com/cake_articles:"${BUILD_TAG}"
             """
     	}
-        post {
-            always {
-                script { 
-                    receiver_container.stop()
-                }
-            }
+    }
+}
+post {
+    always {
+        script { 
+            receiver_container.stop()
         }
     }
 }
