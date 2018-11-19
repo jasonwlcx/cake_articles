@@ -21,7 +21,6 @@ pipeline {
                 steps {
      	            script { 
                         def receiver = docker.build("cake_articles:${BUILD_TAG}")
-                        def receiver_container = receiver.run("--rm -p 80:80")
                     }
                     sh """ 
                     echo "Build the docker Image"
@@ -30,15 +29,16 @@ pipeline {
                 }
             }
             stage ('Test') {
-                agent { dockerfile { args '-v /etc/passwd:/etc/passwd' } }
                 steps {
                     // Shell build step
-                    sh """ 
-                    # Launch the container
-                    #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
-                    ./var/www/html/vendor/bin/phpunit
-                    curl --verbose http://builds.mini-super.com/index.php
-                    """
+                   script {
+                        # Launch the container
+                        def receiver_container = receiver.withRun("--rm -p 80:80") {
+                           #docker run --rm -d -p 80:80 cake_articles:"${BUILD_TAG}"
+                           ./var/www/html/vendor/bin/phpunit
+                           curl --verbose http://builds.mini-super.com/index.php
+                        }
+                    }
                 }
             }
             stage ('Archive') {
@@ -51,11 +51,12 @@ pipeline {
                 }
     	    }
         }
-}
+
 post {
     always {
         script { 
             receiver_container.stop()
         }
     }
+}
 }
