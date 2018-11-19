@@ -32,7 +32,7 @@ pipeline {
                 }
             }
             stage ('Test') {
-                agent { docker { image cake_articles:"${BUILD_TAG} } }
+                agent { docker { image cake_articles:"${BUILD_TAG}" } }
                 steps {
                     // Shell build step
                     sh """ 
