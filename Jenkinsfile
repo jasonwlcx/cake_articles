@@ -1,5 +1,5 @@
 pipeline {
-    node () {
+    node ('Master') {
         environment {
             PATH = "$PATH:/usr/bin"
         }
