@@ -31,7 +31,7 @@ pipeline {
               steps {
                   script {
                      def image = docker.image("cake_articles:${BUILD_TAG}")
-                     def container = image.run("--rm -p 80:80 --link mysql-server:mysql-server cake_articles:${BUILD_TAG}")
+                     def container = image.run("--rm -p 80:80 --link mysql-server:mysql-server")
                         sh """
                         echo "Hello Groovy! From inside recently built container"
                         curl --verbose http://builds.mini-super.com/index.php
