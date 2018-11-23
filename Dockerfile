@@ -63,5 +63,3 @@ RUN mkdir -p \
 # Enable Apache modules and restart
 RUN a2enmod rewrite \
   && service apache2 start
-
-EXPOSE 80
