@@ -2,7 +2,7 @@
 FROM php:7.1.5-apache
 
 #install all the system dependencies and enable PHP modules 
-RUN apt-get update && apt-get install -y \  
+RUN apt-get update && apt-get install -y \
       libicu-dev \
       libpq-dev \
       libmcrypt-dev \
@@ -49,7 +49,7 @@ RUN chown -R www-data:www-data $APP_HOME
 
 # Add cake and composer command to system path
 ENV PATH="${PATH}:/var/www/html/lib/Cake/Console"
-ENV PATH="${PATH}:/var/www/html/app/Vendor/bin"
+ENV PATH="${PATH}:/var/www/html/vendor/bin"
 
 # Create tmp directory and make it writable by the web server
 RUN mkdir -p \

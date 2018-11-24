@@ -169,7 +169,11 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
+<<<<<<< HEAD
         'errorLevel' => E_ALL, ~E_USER_DEPRECATED,
+=======
+        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
+>>>>>>> 5d3ee75f47e9209a524b109585ad3b464dc0b136
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -297,9 +301,14 @@ return [
             'driver' => 'Cake\Database\Driver\Mysql',
             'persistent' => false,
             //'port' => 'non_standard_port_number',
+<<<<<<< HEAD
 	        'host' => 'mysql',
 	        'username' => env('MYSQL_USERNAME', 'root'),
             'password' => env('MYSQL_PASSWORD', ''),
+=======
+            'username' => 'jwilcox',
+            'password' => 'password',
+>>>>>>> 5d3ee75f47e9209a524b109585ad3b464dc0b136
             'database' => 'cake_cms',
             //'encoding' => 'utf8mb4',
             'timezone' => 'UTC',
